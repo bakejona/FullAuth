@@ -11,9 +11,16 @@ export default function SignUp() {
   const [emailAddress, setEmailAddress] = useState("");
   const [password, setPassword] = useState("");
   const [code, setCode] = useState("");
+  const [errorMessage, setErrorMessage] = useState(""); // New state for error messages
 
   const onSignUp = async () => {
     if (!isLoaded) {
+      return;
+    }
+
+    // Basic validation
+    if (!emailAddress || !password) {
+      setErrorMessage("Email and password are required.");
       return;
     }
 
@@ -27,8 +34,10 @@ export default function SignUp() {
         strategy: "email_code",
       });
       setPendingVerification(true);
+      setErrorMessage(""); // Clear error message on success
     } catch (err) {
       console.error("Signup error", err.message);
+      setErrorMessage(err.message); // Set error message for UI feedback
     }
   };
 
@@ -51,14 +60,20 @@ export default function SignUp() {
           "Verification incomplete",
           JSON.stringify(completeSignUp, null, 2)
         );
+        setErrorMessage("Verification failed. Please try again."); // Set error message
       }
     } catch (err) {
       console.error("Verification error", err.message);
+      setErrorMessage(err.message); // Set error message for UI feedback
     }
   };
 
   return (
     <View style={styles.container}>
+      {errorMessage ? (
+        <Text style={styles.errorText}>{errorMessage}</Text>
+      ) : null}{" "}
+      {/* Display error message */}
       {!pendingVerification ? (
         <>
           <TextInput
@@ -75,7 +90,7 @@ export default function SignUp() {
             onChangeText={setPassword}
           />
           <Button mode="outlined" onPress={onSignUp}>
-            <Text>Sign In</Text>
+            <Text>Sign Up</Text> {/* Corrected button text */}
           </Button>
         </>
       ) : (
@@ -97,7 +112,11 @@ export default function SignUp() {
 
 const styles = StyleSheet.create({
   container: {
-    display: "flex",
     flex: 1,
+    padding: 20,
+  },
+  errorText: {
+    color: "red",
+    marginBottom: 10,
   },
 });
