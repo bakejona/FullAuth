@@ -8,7 +8,7 @@ export default function SignUp() {
   const { signUp, setActive, isLoaded } = useSignUp();
   const router = useRouter();
   const [pendingVerification, setPendingVerification] = useState(false);
-  const [emailAddress, setEmailAddress] = useState(""); // Corrected variable name
+  const [emailAddress, setEmailAddress] = useState("");
   const [password, setPassword] = useState("");
   const [code, setCode] = useState("");
 
@@ -19,7 +19,7 @@ export default function SignUp() {
 
     try {
       await signUp.create({
-        emailAddress, // Corrected variable name
+        emailAddress,
         password,
       });
 
@@ -63,8 +63,8 @@ export default function SignUp() {
         <>
           <TextInput
             autoCapitalize="none"
-            value={emailAddress} // Corrected variable name
-            keyboardType="email-address" // Corrected keyboard type
+            value={emailAddress}
+            keyboardType="email-address"
             placeholder="Email"
             onChangeText={setEmailAddress}
           />
