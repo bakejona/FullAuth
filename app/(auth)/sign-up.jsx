@@ -75,7 +75,7 @@ export default function SignUp() {
             onChangeText={setPassword}
           />
           <Button mode="outlined" onPress={onSignUp}>
-            <Text>Sign Up</Text>
+            <Text>Sign In</Text>
           </Button>
         </>
       ) : (
